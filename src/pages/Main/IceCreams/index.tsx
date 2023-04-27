@@ -1,29 +1,21 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from 'react'
 
-import { Head } from "../../../components/Head"
-import { Snacks } from "../../../components/Snacks"
-import { SnackTitle } from "../../../components/SnackTitle"
+import { Head } from '../../../components/Head'
+import { Snacks } from '../../../components/Snacks'
+import { SnackTitle } from '../../../components/SnackTitle'
 
-import { getIceCreams } from "../../../services/api"
-import { SnackData } from "../../../interfaces/SnackData"
+import { getIceCreams } from '../../../services/api'
+import { SnackData } from '../../../interfaces/SnackData'
+import { SnackContext } from '../../../App'
 
 export default function IceCreams() {
-  const [icecreams, setIcecream] = useState<SnackData[]>([])
-
-  useEffect(() => {
-    ; (async () => {
-      const iceCreamRequest = await getIceCreams()
-
-      setIcecream(iceCreamRequest.data)
-    })()
-  }, [])
+  const { iceCreams } = useContext(SnackContext)
 
   return (
     <>
-      <Head title='Ice-creams' description="Nossos melhores ice creams" />
+      <Head title='Ice-creams' description='Nossos melhores ice creams' />
       <SnackTitle> IceCreams</SnackTitle>
-      <Snacks snacks={icecreams}></Snacks>
+      <Snacks snacks={iceCreams}></Snacks>
     </>
   )
-
 }
