@@ -10,7 +10,6 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path='/' element={<MainPage />} >
-        asd
       <Route path='/' element={<BurguersPage />} />
       <Route path='pizzas' element={<PizzasPage />} />
       <Route path='drinks' element={<DrinksPage />} />
