@@ -23,8 +23,10 @@ interface UpdateCartProps {
 interface CartContextProps {
   cart: Snack[]
   addSnackIntoCart: (snack: SnackData) => void
-  // removeSnackFromCard: ({ id, snack }: RemoveSnackFromCart) => void
-  // updateCart: ({ id, snack, newQuantity }: UpdateCartProps) => void
+  removeSnackFromCart: (snack: Snack) => void
+  snackCarIncrement: (snack: Snack) => void
+  snackCarDecrement: (snack: Snack) => void
+  ConfirmOrder: () => void
 }
 
 interface CartProviderProps {
@@ -67,5 +69,43 @@ export function CartProvider({ children }: CartProviderProps) {
     setCart(newCart)
   }
 
-  return <CardContext.Provider value={{ cart, addSnackIntoCart }}>{children}</CardContext.Provider>
+  function removeSnackFromCart(snack: Snack) {
+    const newCart = cart.filter((item) => !(item.id === snack.id && item.snack === snack.snack))
+
+    setCart(newCart)
+    //
+  }
+
+  function updateSnackFromCart(snack: Snack, newQuantity: number) {
+    //
+  }
+
+  function snackCarIncrement(snack: Snack) {
+    updateSnackFromCart(snack, snack.quantity + 1)
+    //
+  }
+
+  function snackCarDecrement(snack: Snack) {
+    updateSnackFromCart(snack, snack.quantity - 1)
+    //
+  }
+
+  function ConfirmOrder() {
+    //
+  }
+
+  return (
+    <CardContext.Provider
+      value={{
+        cart,
+        addSnackIntoCart,
+        removeSnackFromCart,
+        snackCarIncrement,
+        snackCarDecrement,
+        ConfirmOrder,
+      }}
+    >
+      {children}
+    </CardContext.Provider>
+  )
 }
