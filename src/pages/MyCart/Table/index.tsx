@@ -20,7 +20,7 @@ export default function Table() {
     }
   }, [windowWidth])
 
-  if (cart.length === 0) return <h1>Ops parece que voce não tem pedidos, peça já {windowWidth}</h1>
+  if (cart.length === 0) return <h1>Ops parece que voce não tem pedidos, peça já </h1>
 
   return windowWidth > 768 ? <TableDesktop /> : <TableMobile />
 }

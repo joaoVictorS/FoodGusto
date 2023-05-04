@@ -6,6 +6,7 @@ import plusImg from '../../../../assets/circle-plus.svg'
 import minusImg from '../../../../assets/circle-minus.svg'
 
 import { Container } from './styles'
+import ConfirmOrder from '../../../../components/ConfirmOrder'
 
 export default function TableDesktop() {
   const { cart, removeSnackFromCart, snackCarIncrement, snackCarDecrement } = useCart()
@@ -54,6 +55,7 @@ export default function TableDesktop() {
           ))}
         </tbody>
       </table>
+      <ConfirmOrder />
     </Container>
   )
 }
