@@ -104,7 +104,7 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function payOrder() {
-    return alert('Pagamento realizado com sucesso!')
+    return
   }
 
   return (

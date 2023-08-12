@@ -2,19 +2,39 @@ import { Head } from '../../components/Head'
 import OrderHeader from '../../components/OrderHeader'
 import PayOrder from '../../components/Ordercloseaction/PayOrder'
 import { Container, Form, Inner } from './styles'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+type FieldValues = {
+  fullName: string
+  email: string
+  mobile: string
+}
 
 export default function Payment() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>()
+  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data)
+
   return (
     <Container>
       <Head title='Pagamento' />
       <OrderHeader />
       <Inner>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <h4>Informações pessoais</h4>
 
           <div className='field'>
-            <label htmlFor='full-name'>Nome e sobrenome</label>
-            <input type='text' id='full-name' name='full-name' autoComplete='name' />
+            <label htmlFor='fullName'>Nome e sobrenome</label>
+            <input
+              type='text'
+              id='fullName'
+              autoComplete='name'
+              {...register('fullName', { required: true })}
+            />
+            {errors.fullName && <span>Nome e sobrenome são obrigatórios</span>}
           </div>
 
           <div className='grouped'>
@@ -154,8 +174,8 @@ export default function Payment() {
               />
             </div>
           </div>
+          <PayOrder />
         </Form>
-        <PayOrder />
       </Inner>
     </Container>
   )
