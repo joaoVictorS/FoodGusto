@@ -6,7 +6,7 @@ import minusImg from '../../../../assets/circle-minus.svg'
 
 import { Container } from './styles'
 import { FaTrashAlt } from 'react-icons/fa'
-import ConfirmOrder from '../../../../components/ConfirmOrder'
+import ConfirmOrder from '../../../../components/Ordercloseaction/ConfirmOrder'
 
 export default function TableMobile() {
   const { cart, removeSnackFromCart, snackCarIncrement, snackCarDecrement } = useCart()
