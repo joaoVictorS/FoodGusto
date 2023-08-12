@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useState, ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
@@ -32,12 +32,12 @@ export function CartProvider({ children }: CartProviderProps) {
   const navigate = useNavigate()
 
   function addSnackIntoCart(snack: SnackData): void {
-    // buscar
+    //* buscar
     const snackExistentInCart = cart.find(
       (item) => item.snack == snack.snack && item.id == snack.id,
     )
 
-    // atualizar
+    //* atualizar
     if (snackExistentInCart) {
       const newCart = cart.map((item) => {
         if (item.id === snack.id) {
@@ -53,9 +53,9 @@ export function CartProvider({ children }: CartProviderProps) {
 
       return
     }
-    // adicionar
+    //* adicionar
     const newSnack = { ...snack, quantity: 1, subtotal: snack.price }
-    const newCart = [...cart, newSnack] //push no array
+    const newCart = [...cart, newSnack] //* push no array
 
     console.log(`newCart adicao`, newCart)
     toast.success(`${snackEmoji(snack.snack)} ${snack.name} Adicionado nos Pedidos!`)
@@ -104,7 +104,7 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function payOrder() {
-    return
+    //
   }
 
   return (
