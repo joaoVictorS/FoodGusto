@@ -1,8 +1,8 @@
-{
+n{
   "burgers": [
     {
       "id": 1,
-      "snack": "burger"
+      "snack": "burger",
       "name": "Mega",
       "description": "O artesanal tamanho família recheado com três carnes suculentas, queijo e bacon.",
       "price": 25.5,
