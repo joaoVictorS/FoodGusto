@@ -29,8 +29,27 @@ interface CartProviderProps {
 export const CardContext = createContext({} as CartContextProps)
 
 export function CartProvider({ children }: CartProviderProps) {
-  const [cart, setCart] = useState<Snack[]>([])
+    const localStirageKey = '@foodcommerce:cart'
+  const [cart, setCart] = useState<Snack[]>(()=>{
+    const storagedCart = localStorage.getItem(localStirageKey)
+
+    if (storagedCart) {
+      return JSON.parse(storagedCart)
+    }
+    return []
+  })
   const navigate = useNavigate()
+
+  function saveCart(items: Snack[]) {
+    localStorage.setItem(localStirageKey, JSON.stringify(items))
+    setCart(items)
+  }
+
+  function clearCart() {
+
+      localStorage.removeItem(localStirageKey)
+      setCart([])
+  }
 
   function addSnackIntoCart(snack: SnackData): void {
     //* buscar
@@ -50,7 +69,7 @@ export function CartProvider({ children }: CartProviderProps) {
         return item
       })
       toast.success(`Outro(a) ${snackEmoji(snack.snack)} ${snack.name} adicionado nos pedidos!`)
-      setCart(newCart)
+      saveCart(newCart)
 
       return
     }
@@ -60,13 +79,13 @@ export function CartProvider({ children }: CartProviderProps) {
 
     console.log(`newCart adicao`, newCart)
     toast.success(`${snackEmoji(snack.snack)} ${snack.name} Adicionado nos Pedidos!`)
-    setCart(newCart)
+    saveCart(newCart)
   }
 
   function removeSnackFromCart(snack: Snack) {
     const newCart = cart.filter((item) => !(item.id === snack.id && item.snack === snack.snack))
 
-    setCart(newCart)
+    saveCart(newCart)
     //
   }
 
@@ -89,7 +108,7 @@ export function CartProvider({ children }: CartProviderProps) {
       }
       return item
     })
-    setCart(newCart)
+    saveCart(newCart)
   }
 
   function snackCarIncrement(snack: Snack) {
@@ -107,6 +126,7 @@ export function CartProvider({ children }: CartProviderProps) {
   function payOrder(customer: CustomerData) {
 
     console.log('payorder', cart, customer)
+    clearCart() // deve ser retornado apos o retorno postivo da api
     return
   }
 
