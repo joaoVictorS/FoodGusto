@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { useCart } from '../../hooks/useCart'
+import { useCart } from '../../Hooks/useCart'
 
 import { Container } from './styles'
 

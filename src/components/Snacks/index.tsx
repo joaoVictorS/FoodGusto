@@ -4,7 +4,7 @@ import { currencyFormat } from '../../helpers/currencyFormat'
 import { Container } from './styles'
 import { SkeletonSnack } from './SkeletonSnack'
 import { SnackData } from '../../interfaces/SnackData'
-import { useCart } from '../../hooks/useCart'
+import { useCart } from '../../Hooks/useCart'
 
 interface SnacksProps {
   snacks: SnackData[]

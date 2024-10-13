@@ -1,4 +1,4 @@
-import { useSnack } from '../../../hooks/useSnacks'
+import { useSnack } from '../../../Hooks/useSnacks'
 import { Head } from '../../../components/Head'
 import { SnackTitle } from '../../../components/SnackTitle'
 import { Snacks } from '../../../components/Snacks'

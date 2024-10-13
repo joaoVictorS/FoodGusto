@@ -1,5 +1,5 @@
 import { currencyFormat } from '../../../../helpers/currencyFormat'
-import { useCart } from '../../../../hooks/useCart'
+import { useCart } from '../../../../Hooks/useCart'
 
 import plusImg from '../../../../assets/circle-plus.svg'
 import minusImg from '../../../../assets/circle-minus.svg'

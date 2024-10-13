@@ -1,5 +1,5 @@
 import { currencyFormat } from '../../../helpers/currencyFormat'
-import { useCart } from '../../../hooks/useCart'
+import { useCart } from '../../../Hooks/useCart'
 import { Container } from '../styles'
 
 export default function ConfirmOrder() {

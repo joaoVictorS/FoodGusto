@@ -2,39 +2,24 @@ import { Head } from '../../components/Head'
 import OrderHeader from '../../components/OrderHeader'
 import PayOrder from '../../components/Ordercloseaction/PayOrder'
 import { Container, Form, Inner } from './styles'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm, useController, Controller } from 'react-hook-form'
+import { IMaskInput } from 'react-imask'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { schema, FieldValues } from './ValidationSchema'
+import { useCart } from '../../Hooks/useCart'
+import { CustomerData } from '../../interfaces/CustomerData'
 
-const schema = yup.object({
-  fullName: yup.string().required('Nome e sobrenome são obrigatórios'),
-  email: yup.string().email('E-mail inválido').required('E-mail é obrigatório'),
-  mobile: yup.string().required('Celular é obrigatório'),
-  cpf: yup.string().required('CPF é obrigatório'),
-  zipcode: yup.string().required('CEP é obrigatório'),
-  street: yup.string().required('Endereço é obrigatório'),
-  number: yup.string().required('Número é obrigatório'),
-  complemento: yup.string().required('Complemento é obrigatório'),
-  neighborhood: yup.string().required('Bairro é obrigatório'),
-  city: yup.string().required('Cidade é obrigatório'),
-  state: yup.string().required('Estado é obrigatório'),
-  creditCardNumber: yup.string().required('Número do cartão é obrigatório'),
-  creditCardHolderName: yup.string().required('Nome impresso no cartão é obrigatório'),
-  creditCardExpiration: yup.string().required('Validade do cartão é obrigatória'),
-  creditCardCode: yup.string().required('Código de segurança do cartão é obrigatório'),
-})
-
-type FieldValues = yup.InferType<typeof schema>
 
 export default function Payment() {
+  const { payOrder } = useCart()
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
     resolver: yupResolver(schema),
   })
-  const onSubmit: SubmitHandler<FieldValues> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<FieldValues> = (data) => payOrder(data as CustomerData)
 
   return (
     <Container>
@@ -46,27 +31,64 @@ export default function Payment() {
 
           <div className='field'>
             <label htmlFor='fullName'>Nome e sobrenome</label>
-            <input type='text' id='fullName' autoComplete='name' {...register('fullName')} />
+            <Controller
+              name='fullName'
+              control={control}
+              render={({ field }) => (
+                <input type='text' id='fullName' autoComplete='fullName' {...field} />
+              )}
+            />
             {errors.fullName && <span>Nome e sobrenome são obrigatórios</span>}
           </div>
 
           <div className='grouped'>
             <div className='field'>
               <label htmlFor='email'>E-mail</label>
-              <input type='email' id='email' autoComplete='email' {...register('email')} />
+              <Controller
+                name='email'
+                control={control}
+                render={({ field }) => (
+                  <input type='text' id='email' autoComplete='email' {...field} />
+                )}
+              />
               {errors.email && <span>E-mail inválido</span>}
             </div>
 
             <div className='field'>
               <label htmlFor='mobile'>Celular</label>
-              <input type='tel' id='mobile' autoComplete='phone' {...register('mobile')} />
+              <Controller
+                name='mobile'
+                control={control}
+                render={({ field }) => (
+                  // eslint-disable-next-line react/jsx-no-undef
+                  <IMaskInput
+                    type='tel'
+                    id='mobile'
+                    autoComplete='mobile'
+                    {...field}
+                    mask='(00) 00000-0000'
+                  />
+                )}
+              />
               {errors.mobile && <span>Celular é obrigatório</span>}
             </div>
 
             <div className='field'>
               <label htmlFor='document'>CPF / CNPJ</label>
-              <input type='text' id='document' {...register('cpf')} />
-              {errors.cpf && <span>CPF é obrigatório</span>}
+              <Controller
+                name='document'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput
+                    type='tel'
+                    id='document'
+                    autoComplete='document'
+                    {...field}
+                    mask='000.000.000-00'
+                  />
+                )}
+              />
+              {errors.document && <span>CPF é obrigatório</span>}
             </div>
           </div>
 
@@ -74,33 +96,62 @@ export default function Payment() {
 
           <div className='field'>
             <label htmlFor='zipcode'>CEP</label>
-
-            <input
-              type='text'
-              id='zipcode'
-              autoComplete='postal-code'
-              style={{ width: '120px' }}
-              {...register('zipcode')}
+            <Controller
+              name='zipcode'
+              control={control}
+              render={({ field }) => (
+                <IMaskInput
+                  type='tel'
+                  id='zipcode'
+                  autoComplete='postal-code'
+                  mask='00000-000'
+                  style={{ width: '120px' }}
+                  {...field}
+                />
+              )}
             />
             {errors.zipcode && <span>CEP é obrigatório</span>}
           </div>
 
           <div className='field'>
             <label htmlFor='street'>Endereço</label>
-            <input type='text' id='street' {...register('street')} />
+            <Controller
+              name='street'
+              control={control}
+              render={({ field }) => (
+                <IMaskInput type='tel' id='street' autoComplete='street-address' {...field} />
+              )}
+            />
             {errors.street && <span>Endereço é obrigatório</span>}
           </div>
 
           <div className='grouped'>
             <div className='field'>
               <label htmlFor='number'>Número</label>
-              <input type='text' id='number' {...register('number')} />
+              <Controller
+                name='number'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput type='tel' id='number' autoComplete='address-line1' {...field} />
+                )}
+              />
               {errors.number && <span>Número é obrigatório</span>}
             </div>
 
             <div className='field'>
               <label htmlFor='complement'>Complemento</label>
-              <input type='text' id='complement' {...register('complemento')} />
+              <Controller
+                name='complemento'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput
+                    type='tel'
+                    id='complement'
+                    autoComplete='address-line2'
+                    {...field}
+                  />
+                )}
+              />
               {errors.complemento && <span>Complemento é obrigatório</span>}
             </div>
           </div>
@@ -108,48 +159,66 @@ export default function Payment() {
           <div className='grouped'>
             <div className='field'>
               <label htmlFor='neighborhood'>Bairro</label>
-              <input type='text' id='neighborhood' {...register('neighborhood')} />
+              <Controller
+                name='neighborhood'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput type='tel' id='neighborhood' autoComplete='address-line2' {...field} />
+                )}
+              />
               {errors.neighborhood && <span>Bairro é obrigatório</span>}
             </div>
 
             <div className='field'>
               <label htmlFor='city'>Cidade</label>
-              <input type='text' id='city' {...register('city')} />
+              <Controller
+                name='city'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput type='tel' id='city' autoComplete='address-line2' {...field} />
+                )}
+              />
               {errors.city && <span>Cidade é obrigatório</span>}
             </div>
 
             <div className='field'>
               <label htmlFor='state'>Estado</label>
-              <select id='state' {...register('state')}>
-                <option value=''>Selecione</option>
-                <option value='AC'>Acre</option>
-                <option value='AL'>Alagoas</option>
-                <option value='AP'>Amapá</option>
-                <option value='AM'>Amazonas</option>
-                <option value='BA'>Bahia</option>
-                <option value='CE'>Ceará</option>
-                <option value='ES'>Espírito Santo</option>
-                <option value='GO'>Goiás</option>
-                <option value='MA'>Maranhão</option>
-                <option value='MT'>Mato Grosso</option>
-                <option value='MS'>Mato Grosso do Sul</option>
-                <option value='MG'>Minas Gerais</option>
-                <option value='PA'>Pará</option>
-                <option value='PB'>Paraíba</option>
-                <option value='PR'>Paraná</option>
-                <option value='PE'>Pernambuco</option>
-                <option value='PI'>Piauí</option>
-                <option value='RJ'>Rio de Janeiro</option>
-                <option value='RN'>Rio Grande do Norte</option>
-                <option value='RS'>Rio Grande do Sul</option>
-                <option value='RO'>Rondônia</option>
-                <option value='RR'>Roraima</option>
-                <option value='SC'>Santa Catarina</option>
-                <option value='SP'>São Paulo</option>
-                <option value='SE'>Sergipe</option>
-                <option value='TO'>Tocantins</option>
-                <option value='DF'>Distrito Federal</option>
-              </select>
+              <Controller
+                name='state'
+                control={control}
+                render={({ field }) => (
+                  <select id='state' {...field}>
+                    <option value=''>Selecione</option>
+                    <option value='AC'>Acre</option>
+                    <option value='AL'>Alagoas</option>
+                    <option value='AP'>Amapá</option>
+                    <option value='AM'>Amazonas</option>
+                    <option value='BA'>Bahia</option>
+                    <option value='CE'>Ceará</option>
+                    <option value='ES'>Espírito Santo</option>
+                    <option value='GO'>Goiás</option>
+                    <option value='MA'>Maranhão</option>
+                    <option value='MT'>Mato Grosso</option>
+                    <option value='MS'>Mato Grosso do Sul</option>
+                    <option value='MG'>Minas Gerais</option>
+                    <option value='PA'>Pará</option>
+                    <option value='PB'>Paraíba</option>
+                    <option value='PR'>Paraná</option>
+                    <option value='PE'>Pernambuco</option>
+                    <option value='PI'>Piauí</option>
+                    <option value='RJ'>Rio de Janeiro</option>
+                    <option value='RN'>Rio Grande do Norte</option>
+                    <option value='RS'>Rio Grande do Sul</option>
+                    <option value='RO'>Rondônia</option>
+                    <option value='RR'>Roraima</option>
+                    <option value='SC'>Santa Catarina</option>
+                    <option value='SP'>São Paulo</option>
+                    <option value='SE'>Sergipe</option>
+                    <option value='TO'>Tocantins</option>
+                    <option value='DF'>Distrito Federal</option>
+                  </select>
+                )}
+              />
               {errors.state && <span>Estado é obrigatório</span>}
             </div>
           </div>
@@ -158,22 +227,30 @@ export default function Payment() {
 
           <div className='field'>
             <label htmlFor='credit-card-number'>Número do cartão</label>
-            <input
-              type='text'
-              id='credit-card-number'
-              autoComplete='cc-number'
-              {...register('creditCardNumber')}
+            <Controller
+              name='creditCardNumber'
+              control={control}
+              render={({ field }) => (
+                <IMaskInput
+                  type='tel'
+                  id='credit-card-number'
+                  autoComplete='cc-number'
+                  {...field}
+                  mask='0000 0000 0000 0000'
+                />
+              )}
             />
             {errors.creditCardNumber && <span>Número do cartão é obrigatório</span>}
           </div>
 
           <div className='field'>
             <label htmlFor='credit-card-holder-name'>Nome impresso no cartão</label>
-            <input
-              type='text'
-              id='credit-card-holder-name'
-              autoComplete='cc-name'
-              {...register('creditCardHolderName')}
+            <Controller
+              name='creditCardHolderName'
+              control={control}
+              render={({ field }) => (
+                <input type='text' id='credit-card-holder-name' autoComplete='cc-name' {...field} />
+              )}
             />
             {errors.creditCardHolderName && <span>Nome impresso no cartão é obrigatório</span>}
           </div>
@@ -181,22 +258,30 @@ export default function Payment() {
           <div className='grouped'>
             <div className='field'>
               <label htmlFor='credit-card-expiration'>Validade (MM/AA)</label>
-              <input
-                type='text'
-                id='credit-card-expiration'
-                autoComplete='cc-exp'
-                {...register('creditCardExpiration')}
+              <Controller
+                name='creditCardExpiration'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput
+                    type='tel'
+                    id='credit-card-expiration'
+                    autoComplete='cc-exp'
+                    {...field}
+                    mask='00/00'
+                  />
+                )}
               />
               {errors.creditCardExpiration && <span>Validade do cartão é obrigatória</span>}
             </div>
 
             <div className='field'>
               <label htmlFor='credit-card-code'>Código de segurança (CVV)</label>
-              <input
-                type='text'
-                id='credit-card-code'
-                autoComplete='cc-csc'
-                {...register('creditCardCode')}
+              <Controller
+                name='creditCardCode'
+                control={control}
+                render={({ field }) => (
+                  <input type='text' id='credit-card-code' autoComplete='cc-csc' {...field} />
+                )}
               />
               {errors.creditCardCode && <span>Código de segurança do cartão é obrigatório</span>}
             </div>

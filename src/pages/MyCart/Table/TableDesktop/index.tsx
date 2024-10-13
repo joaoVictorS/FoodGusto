@@ -1,5 +1,5 @@
 import { FaTrashAlt } from 'react-icons/fa'
-import { useCart } from '../../../../hooks/useCart'
+import { useCart } from '../../../../Hooks/useCart'
 import { currencyFormat } from '../../../../helpers/currencyFormat'
 
 import plusImg from '../../../../assets/circle-plus.svg'
