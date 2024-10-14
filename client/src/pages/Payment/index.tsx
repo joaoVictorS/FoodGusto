@@ -34,7 +34,7 @@ export default function Payment() {
             <Controller
               name='fullName'
               control={control}
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <input type='text' id='fullName' autoComplete='fullName' {...field} />
               )}
             />
@@ -47,7 +47,7 @@ export default function Payment() {
               <Controller
                 name='email'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <input type='text' id='email' autoComplete='email' {...field} />
                 )}
               />
@@ -59,7 +59,7 @@ export default function Payment() {
               <Controller
                 name='mobile'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   // eslint-disable-next-line react/jsx-no-undef
                   <IMaskInput
                     type='tel'
@@ -78,7 +78,7 @@ export default function Payment() {
               <Controller
                 name='document'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <IMaskInput
                     type='tel'
                     id='document'
@@ -99,7 +99,7 @@ export default function Payment() {
             <Controller
               name='zipcode'
               control={control}
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <IMaskInput
                   type='tel'
                   id='zipcode'
@@ -118,7 +118,7 @@ export default function Payment() {
             <Controller
               name='street'
               control={control}
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <IMaskInput type='tel' id='street' autoComplete='street-address' {...field} />
               )}
             />
@@ -131,7 +131,7 @@ export default function Payment() {
               <Controller
                 name='number'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <IMaskInput type='tel' id='number' autoComplete='address-line1' {...field} />
                 )}
               />
@@ -143,7 +143,7 @@ export default function Payment() {
               <Controller
                 name='complemento'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <IMaskInput
                     type='tel'
                     id='complement'
@@ -162,7 +162,7 @@ export default function Payment() {
               <Controller
                 name='neighborhood'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <IMaskInput type='tel' id='neighborhood' autoComplete='address-line2' {...field} />
                 )}
               />
@@ -174,7 +174,7 @@ export default function Payment() {
               <Controller
                 name='city'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <IMaskInput type='tel' id='city' autoComplete='address-line2' {...field} />
                 )}
               />
@@ -186,7 +186,7 @@ export default function Payment() {
               <Controller
                 name='state'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <select id='state' {...field}>
                     <option value=''>Selecione</option>
                     <option value='AC'>Acre</option>
@@ -230,7 +230,7 @@ export default function Payment() {
             <Controller
               name='creditCardNumber'
               control={control}
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <IMaskInput
                   type='tel'
                   id='credit-card-number'
@@ -248,7 +248,7 @@ export default function Payment() {
             <Controller
               name='creditCardHolderName'
               control={control}
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <input type='text' id='credit-card-holder-name' autoComplete='cc-name' {...field} />
               )}
             />
@@ -261,7 +261,7 @@ export default function Payment() {
               <Controller
                 name='creditCardExpiration'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <IMaskInput
                     type='tel'
                     id='credit-card-expiration'
@@ -279,7 +279,7 @@ export default function Payment() {
               <Controller
                 name='creditCardCode'
                 control={control}
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <input type='text' id='credit-card-code' autoComplete='cc-csc' {...field} />
                 )}
               />
